@@ -8,13 +8,13 @@ import 'el_tooltip/el_tooltip.dart';
 class EditTableDropDown extends StatefulWidget {
   /// [EditTableDropDown] constructor to edit the table, add remove columns rows etc.
   const EditTableDropDown({
-    Key? key,
+    super.key,
     required this.dropDownColor,
     required this.iconColor,
     required this.iconSize,
     required this.padding,
     required this.onOptionSelected,
-  }) : super(key: key);
+  });
 
   ///[dropDownColor] to define the dropdown background color
   final Color dropDownColor;
@@ -40,8 +40,7 @@ class _EditTableDropDownState extends State<EditTableDropDown> {
 
   @override
   void initState() {
-    _editTableETKey = GlobalKey<ElTooltipState>(
-        debugLabel: 'fontBgColorKey${widget.key.toString()}');
+    _editTableETKey = GlobalKey<ElTooltipState>(debugLabel: 'fontBgColorKey${widget.key.toString()}');
     super.initState();
   }
 
@@ -79,8 +78,7 @@ class _EditTableDropDownState extends State<EditTableDropDown> {
     );
   }
 
-  Widget _getEditTableItem(
-      EditTableEnum type, BuildContext context, bool isMobile) {
+  Widget _getEditTableItem(EditTableEnum type, BuildContext context, bool isMobile) {
     String value = "";
     String imagePath = ImageConstant.kiInsertRowBelowPng;
 
@@ -139,8 +137,7 @@ class _EditTableDropDownState extends State<EditTableDropDown> {
                 Expanded(
                   child: Text(
                     value,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500, color: widget.iconColor),
+                    style: TextStyle(fontWeight: FontWeight.w500, color: widget.iconColor),
                   ),
                 ),
               ],
@@ -188,8 +185,7 @@ class _EditTableDropDownState extends State<EditTableDropDown> {
                             padding: EdgeInsets.only(left: 8.0),
                             child: Text(
                               'Edit Table',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -205,27 +201,15 @@ class _EditTableDropDownState extends State<EditTableDropDown> {
                                 shrinkWrap: true,
                                 itemCount: EditTableEnum.values.length,
                                 itemBuilder: (context, i) {
-                                  return _getEditTableItem(
-                                      EditTableEnum.values.toList()[i],
-                                      context,
-                                      isMobileView);
+                                  return _getEditTableItem(EditTableEnum.values.toList()[i], context, isMobileView);
                                 })
                             : GridView.builder(
                                 shrinkWrap: true,
                                 itemCount: EditTableEnum.values.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount:
-                                            MediaQuery.of(context).size.width <
-                                                    380
-                                                ? 1
-                                                : 2,
-                                        childAspectRatio: 1 / .3),
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: MediaQuery.of(context).size.width < 380 ? 1 : 2, childAspectRatio: 1 / .3),
                                 itemBuilder: (context, i) {
-                                  return _getEditTableItem(
-                                      EditTableEnum.values.toList()[i],
-                                      context,
-                                      isMobileView);
+                                  return _getEditTableItem(EditTableEnum.values.toList()[i], context, isMobileView);
                                 }),
                       ),
                     ),
@@ -248,8 +232,7 @@ class _EditTableDropDownState extends State<EditTableDropDown> {
         shrinkWrap: true,
         itemCount: EditTableEnum.values.length,
         itemBuilder: (context, i) {
-          return _getEditTableItem(
-              EditTableEnum.values.toList()[i], context, isMobileView);
+          return _getEditTableItem(EditTableEnum.values.toList()[i], context, isMobileView);
         },
       ),
     );

@@ -1,4 +1,4 @@
-/// ElementBox class is used to represent an element's offset information.
+// ignore_for_file: public_member_api_docs
 
 class ElementBox {
   /// The width of the element.

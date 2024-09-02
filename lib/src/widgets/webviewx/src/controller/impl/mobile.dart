@@ -4,14 +4,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:quill_html_editor/src/widgets/webviewx/src/controller/controller.dart'
-    as i;
+import 'package:quill_html_editor/src/widgets/webviewx/src/controller/controller.dart' as i;
 import 'package:quill_html_editor/src/widgets/webviewx/src/utils/utils.dart';
 import 'package:webview_flutter/webview_flutter.dart' as wf;
 
 /// Mobile implementation
-class WebViewXController extends ChangeNotifier
-    implements i.WebViewXController<wf.WebViewController> {
+class WebViewXController extends ChangeNotifier implements i.WebViewXController<wf.WebViewController> {
   /// Webview controller connector
   @override
   late wf.WebViewController connector;
@@ -56,8 +54,7 @@ class WebViewXController extends ChangeNotifier
   /// [SourceType] is [SourceType.urlBypass], which means it should
   /// use the bypass to fetch the web page content.
   @override
-  bool get isCurrentContentURLBypass =>
-      value.sourceType == SourceType.urlBypass;
+  bool get isCurrentContentURLBypass => value.sourceType == SourceType.urlBypass;
 
   /// Set webview content to the specified `content`.
   /// Example: https://flutter.dev/

@@ -5,11 +5,7 @@ import 'package:quill_html_editor/src/widgets/webviewx/src/webviewx_plus.dart';
 ///[TablePicker] a widget to interactively selected the number of rows and columns to insert in editor
 class TablePicker extends StatefulWidget {
   ///[TablePicker] a widget to interactively selected the number of rows and columns to insert in editor
-  const TablePicker(
-      {super.key,
-      this.rowCount = 6,
-      required this.onTablePicked,
-      this.width = 200});
+  const TablePicker({super.key, this.rowCount = 6, required this.onTablePicked, this.width = 200});
 
   ///[onTablePicked] a callback function that returns the selected row and column index
   final Function(int row, int column) onTablePicked;
@@ -37,8 +33,7 @@ class _TablePickerState extends State<TablePicker> {
 
   _detectTapedItem(PointerEvent event) {
     _clearSelection();
-    final RenderBox box =
-        _cellKey.currentContext!.findAncestorRenderObjectOfType<RenderBox>()!;
+    final RenderBox box = _cellKey.currentContext!.findAncestorRenderObjectOfType<RenderBox>()!;
     final result = BoxHitTestResult();
     Offset local = box.globalToLocal(event.position);
     if (box.hitTest(result, position: local)) {
@@ -86,8 +81,7 @@ class _TablePickerState extends State<TablePicker> {
           itemCount: widget.rowCount! * widget.rowCount!,
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 1, crossAxisCount: widget.rowCount!),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(childAspectRatio: 1, crossAxisCount: widget.rowCount!),
           itemBuilder: (context, index) {
             return _CellSelectionWidget(
               index: index,
@@ -95,14 +89,10 @@ class _TablePickerState extends State<TablePicker> {
                 // width: widget.width! / widget.rowCount!,
                 margin: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
-                    color: _selectedIndexes.contains(index)
-                        ? Colors.lightBlue.shade50
-                        : Colors.transparent,
+                    color: _selectedIndexes.contains(index) ? Colors.lightBlue.shade50 : Colors.transparent,
                     border: Border.all(
                       width: _selectedIndexes.contains(index) ? 2 : 1,
-                      color: _selectedIndexes.contains(index)
-                          ? Colors.lightBlue.shade100
-                          : Colors.black45,
+                      color: _selectedIndexes.contains(index) ? Colors.lightBlue.shade100 : Colors.black45,
                     )),
               ),
             );
@@ -127,9 +117,7 @@ class _TablePickerState extends State<TablePicker> {
 class _CellSelectionWidget extends SingleChildRenderObjectWidget {
   final int index;
 
-  const _CellSelectionWidget(
-      {required Widget child, required this.index, Key? key})
-      : super(child: child, key: key);
+  const _CellSelectionWidget({required Widget super.child, required this.index});
 
   @override
   _CellBox createRenderObject(BuildContext context) {

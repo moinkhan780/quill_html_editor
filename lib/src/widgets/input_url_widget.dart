@@ -55,8 +55,7 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
 
   @override
   void initState() {
-    _toolTipKey = GlobalKey<ElTooltipState>(
-        debugLabel: widget.controller.hashCode.toString());
+    _toolTipKey = GlobalKey<ElTooltipState>(debugLabel: widget.controller.hashCode.toString());
     super.initState();
   }
 
@@ -76,8 +75,7 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
           }
         },
         key: _toolTipKey,
-        content: _getTextFieldBytType(
-            true, onDoneLastClicked, onCloseLastClicked, selectionMap, context),
+        content: _getTextFieldBytType(true, onDoneLastClicked, onCloseLastClicked, selectionMap, context),
         child: widget.iconWidget,
       );
     } else {
@@ -88,8 +86,7 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
                 context: context,
                 isScrollControlled: true,
                 builder: (context) {
-                  return _getTextFieldBytType(false, onDoneLastClicked,
-                      onCloseLastClicked, selectionModel, context);
+                  return _getTextFieldBytType(false, onDoneLastClicked, onCloseLastClicked, selectionModel, context);
                 });
           });
         },
@@ -99,17 +96,12 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
   }
 
   Widget _getTextFieldBytType(
-      bool isToolTip,
-      int onDoneLastClicked,
-      int onCloseLastClicked,
-      SelectionModel? selectionModel,
-      BuildContext context) {
+      bool isToolTip, int onDoneLastClicked, int onCloseLastClicked, SelectionModel? selectionModel, BuildContext context) {
     return WebViewAware(
       child: Form(
           key: _formKey,
           child: Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
                 height: 60,
                 alignment: Alignment.center,
@@ -120,12 +112,9 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
                     ),
                     Flexible(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 4.0, vertical: 0),
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 0),
                         child: Container(
-                          decoration: BoxDecoration(
-                              color: HexColor.fromHex('#E7F0FE'),
-                              borderRadius: BorderRadius.circular(10)),
+                          decoration: BoxDecoration(color: HexColor.fromHex('#E7F0FE'), borderRadius: BorderRadius.circular(10)),
                           child: TextFormField(
                             minLines: 1,
                             onChanged: (v) {
@@ -138,8 +127,7 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
                               return null;
                             },
                             decoration: const InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 5),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 5),
                                 errorBorder: InputBorder.none,
                                 hintText: ' Type URL',
                                 alignLabelWithHint: true,
@@ -158,13 +146,10 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
                         onDoneLastClicked = now;
                         if (_formKey.currentState!.validate()) {
                           if (selectionModel != null) {
-                            widget.controller.setSelectionRange(
-                                selectionModel.index ?? 0,
-                                selectionModel.length ?? 0);
+                            widget.controller.setSelectionRange(selectionModel.index ?? 0, selectionModel.length ?? 0);
                           }
 
-                          Future.delayed(const Duration(milliseconds: 10))
-                              .then((value) {
+                          Future.delayed(const Duration(milliseconds: 10)).then((value) {
                             widget.onSubmit(_inputValue ?? '');
                             if (isToolTip) {
                               _toolTipKey.currentState!.hideOverlay();

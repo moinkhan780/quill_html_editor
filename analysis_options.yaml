@@ -1,3 +1,7 @@
+analyzer:
+  errors:
+    dangling_library_doc_comments: ignore
+    use_build_context_synchronously: ignore
 include: package:flutter_lints/flutter.yaml
 
 # Additional information about this file can be found at
