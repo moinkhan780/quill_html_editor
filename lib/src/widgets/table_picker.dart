@@ -31,7 +31,7 @@ class _TablePickerState extends State<TablePicker> {
     super.initState();
   }
 
-  _detectTapedItem(PointerEvent event) {
+  void _detectTapedItem(PointerEvent event) {
     _clearSelection();
     final RenderBox box = _cellKey.currentContext!.findAncestorRenderObjectOfType<RenderBox>()!;
     final result = BoxHitTestResult();
@@ -48,7 +48,7 @@ class _TablePickerState extends State<TablePicker> {
     }
   }
 
-  _selectIndex(int index) {
+  void _selectIndex(int index) {
     setState(() {
       _selectedIndexes.add(index);
       List<int> tempList = _selectedIndexes.toList();

@@ -26,8 +26,9 @@ class HtmlUtils {
   /// Checks if the source looks like HTML
   static bool isFullHtmlPage(String src) {
     final localSrc = src.trim().toLowerCase();
-    return localSrc
-            .startsWith(RegExp('<!DOCTYPE html>', caseSensitive: false)) &&
+    return localSrc.startsWith(
+          RegExp('<!DOCTYPE html>', caseSensitive: false),
+        ) &&
         // I didn't forget the closing bracket here.
         // Html opening tag may also have some random attributes.
         localSrc.contains(RegExp('<html', caseSensitive: false)) &&
@@ -119,9 +120,12 @@ class HtmlUtils {
   ///
   /// Pretty raw, I know, but it works
   static String encodeImageAsEmbeddedBase64(
-      String fileName, Uint8List imageBytes) {
+    String fileName,
+    Uint8List imageBytes,
+  ) {
     const imageWidth = '100%';
-    final base64Image = '<img width="$imageWidth" src="data:image/png;base64, '
+    final base64Image =
+        '<img width="$imageWidth" src="data:image/png;base64, '
         '${base64Encode(imageBytes)}" data-filename="$fileName">';
     return base64Image;
   }
@@ -166,10 +170,12 @@ class HtmlUtils {
     const newLine = '\n';
     const scriptOpenTag = '<script>';
     const scriptCloseTag = '</script>';
-    final jsContent =
-        jsContents.reduce((prev, elem) => prev + newLine * 2 + elem);
+    final jsContent = jsContents.reduce(
+      (prev, elem) => prev + newLine * 2 + elem,
+    );
 
-    final whatToEmbed = newLine +
+    final whatToEmbed =
+        newLine +
         scriptOpenTag +
         newLine +
         jsContent +
@@ -191,12 +197,17 @@ class HtmlUtils {
   /// it's attributes (if any), and it will append `toInject` to it, such as the original
   /// `htmlTag` will now have `toInject` as it's first child (by child we mean HTML DOM child)
   static String injectAsChildOf(
-      String htmlTag, String source, String toInject) {
+    String htmlTag,
+    String source,
+    String toInject,
+  ) {
     final replaceSpot = '<$htmlTag([^>]*)>';
-    return source.replaceFirstMapped(RegExp(replaceSpot, caseSensitive: false),
-        (match) {
-      return '<$htmlTag${match.group(1)!}> \n$toInject';
-    });
+    return source.replaceFirstMapped(
+      RegExp(replaceSpot, caseSensitive: false),
+      (match) {
+        return '<$htmlTag${match.group(1)!}> \n$toInject';
+      },
+    );
   }
 
   /// Generic function to embed anything inside HTML source, at the specified position.
@@ -238,14 +249,12 @@ class HtmlUtils {
   /// will also call latter iFrames' "connect_js_to_flutter" callbacks, thus messing up
   /// others' functions and, well, everything.
   static String embedWebIframeJsConnector(
-      String source, String windowDisambiguator) {
-    return embedJsInHtmlSource(
-      source,
-      {
-        'parent.$jsToDartConnectorFN$windowDisambiguator && parent.$jsToDartConnectorFN$windowDisambiguator(window)'
-      },
-      position: EmbedPosition.aboveHeadCloseTag,
-    );
+    String source,
+    String windowDisambiguator,
+  ) {
+    return embedJsInHtmlSource(source, {
+      'parent.$jsToDartConnectorFN$windowDisambiguator && parent.$jsToDartConnectorFN$windowDisambiguator(window)',
+    }, position: EmbedPosition.aboveHeadCloseTag);
   }
 
   /// Builds a unique string to use as windowDisambiguator for
@@ -268,10 +277,13 @@ class HtmlUtils {
 
   /// Embeds click listeners inside the page and calls Dart callback when triggered
   static String embedClickListenersInPageSource(
-      String pageUrl, String pageSource) {
+    String pageUrl,
+    String pageSource,
+  ) {
     return embedInHtmlSource(
       source: pageSource,
-      whatToEmbed: '''
+      whatToEmbed:
+          '''
       <base href="$pageUrl">
       <script>
 

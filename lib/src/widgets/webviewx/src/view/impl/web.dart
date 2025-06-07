@@ -49,7 +49,7 @@ class WebViewX extends StatefulWidget implements view_interface.WebViewX {
   /// being created.
   @override
   final Function(ctrl_interface.WebViewXController controller)?
-      onWebViewCreated;
+  onWebViewCreated;
 
   /// A set of [EmbeddedJsContent].
   ///
@@ -189,10 +189,10 @@ class _WebViewXState extends State<WebViewX> {
 
   WebViewXController _createWebViewXController() {
     return WebViewXController(
-      initialContent: widget.initialContent,
-      initialSourceType: widget.initialSourceType,
-      ignoreAllGestures: _ignoreAllGestures,
-    )
+        initialContent: widget.initialContent,
+        initialSourceType: widget.initialSourceType,
+        ignoreAllGestures: _ignoreAllGestures,
+      )
       ..addListener(_handleChange)
       ..addIgnoreGesturesListener(_handleIgnoreGesturesChange);
   }
@@ -307,10 +307,7 @@ class _WebViewXState extends State<WebViewX> {
       height: widget.height,
       child: AbsorbPointer(
         child: RepaintBoundary(
-          child: HtmlElementView(
-            key: widget.key,
-            viewType: iframeViewType,
-          ),
+          child: HtmlElementView(key: widget.key, viewType: iframeViewType),
         ),
       ),
     );
@@ -321,19 +318,12 @@ class _WebViewXState extends State<WebViewX> {
     );
   }
 
-  Widget _iframeIgnorePointer({
-    bool ignoring = false,
-    required Widget child,
-  }) {
+  Widget _iframeIgnorePointer({bool ignoring = false, required Widget child}) {
     return Stack(
       children: [
         child,
         if (ignoring)
-          Positioned.fill(
-            child: PointerInterceptor(
-              child: Container(),
-            ),
-          )
+          Positioned.fill(child: PointerInterceptor(child: Container()))
         else
           const SizedBox.shrink(),
       ],
@@ -464,7 +454,9 @@ class _WebViewXState extends State<WebViewX> {
     _debugLog(dartObj.toString());
 
     if (!await _checkNavigationAllowed(
-        href, webViewXController.value.sourceType)) {
+      href,
+      webViewXController.value.sourceType,
+    )) {
       _debugLog('Navigation not allowed for source:\n$href\n');
       return;
     }
@@ -485,10 +477,7 @@ class _WebViewXState extends State<WebViewX> {
         ? null
         : (<String, String>{}..addEntries(
             (body as List<dynamic>).map(
-              (e) => MapEntry<String, String>(
-                e[0].toString(),
-                e[1].toString(),
-              ),
+              (e) => MapEntry<String, String>(e[0].toString(), e[1].toString()),
             ),
           ));
 
@@ -507,31 +496,37 @@ class _WebViewXState extends State<WebViewX> {
     Object? body,
   }) {
     _fetchPageSourceBypass(
-      method: method,
-      url: url,
-      headers: headers,
-      body: body,
-    ).then((source) {
-      _setPageSourceAfterBypass(url, source);
+          method: method,
+          url: url,
+          headers: headers,
+          body: body,
+        )
+        .then((source) {
+          _setPageSourceAfterBypass(url, source);
 
-      webViewXController.webRegisterNewHistoryEntry(WebViewContent(
-        source: url,
-        sourceType: SourceType.urlBypass,
-        headers: headers,
-        webPostRequestBody: body,
-      ));
+          webViewXController.webRegisterNewHistoryEntry(
+            WebViewContent(
+              source: url,
+              sourceType: SourceType.urlBypass,
+              headers: headers,
+              webPostRequestBody: body,
+            ),
+          );
 
-      _debugLog('Got a new history entry: $url\n');
-    }).catchError((e) {
-      widget.onWebResourceError?.call(WebResourceError(
-        description: 'Failed to fetch the page at $url\nError:\n$e\n',
-        errorCode: WebResourceErrorType.connect.index,
-        errorType: WebResourceErrorType.connect,
-        domain: Uri.parse(url).authority,
-        failingUrl: url,
-      ));
-      _debugLog('Failed to fetch the page at $url\nError:\n$e\n');
-    });
+          _debugLog('Got a new history entry: $url\n');
+        })
+        .catchError((e) {
+          widget.onWebResourceError?.call(
+            WebResourceError(
+              description: 'Failed to fetch the page at $url\nError:\n$e\n',
+              errorCode: WebResourceErrorType.connect.index,
+              errorType: WebResourceErrorType.connect,
+              domain: Uri.parse(url).authority,
+              failingUrl: url,
+            ),
+          );
+          _debugLog('Failed to fetch the page at $url\nError:\n$e\n');
+        });
   }
 
   Future<String> _fetchPageSourceBypass({
